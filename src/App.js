@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BarChart from "./components/BarChart";
+import StackedBarChart from "./components/StackedBarChart";
 import { holidayData } from "./Data";
 import "./styles.css";
 
@@ -30,9 +31,52 @@ export default function App() {
     ]
   });
 
+  const data = {
+    labels: ["Holiday Data"],
+    datasets: [
+      {
+        label: "Statutory Days",
+        data: [holidayData.statutoryDays],
+        backgroundColor: "rgba(75, 192, 192, 0.6)"
+      },
+      {
+        label: "Non-Statutory Days",
+        data: [holidayData.nonStatutoryDays],
+        backgroundColor: "rgba(255, 99, 132, 0.6)"
+      },
+      {
+        label: "Non-Statutory Carry Over Days",
+        data: [holidayData.nonStatutoryCarryOverDays],
+        backgroundColor: "rgba(255, 206, 86, 0.6)"
+      },
+      {
+        label: "Expiring Days",
+        data: [holidayData.expiringDays],
+        backgroundColor: "rgba(153, 102, 255, 0.6)"
+      }
+    ],
+    borderColor: "Black",
+    borderWidth: 3
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true
+      },
+      x: {
+        stacked: true
+      },
+      y: {
+        stacked: true
+      }
+    }
+  };
+
   return (
     <div className="App">
       <BarChart chartData={vacationData} />
+      <StackedBarChart data={data} options={options} />
     </div>
   );
 }
